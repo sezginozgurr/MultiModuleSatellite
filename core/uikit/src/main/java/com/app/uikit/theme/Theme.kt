@@ -1,6 +1,5 @@
-package com.app.satellitecomposeproject.ui.theme
+package com.app.uikit.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

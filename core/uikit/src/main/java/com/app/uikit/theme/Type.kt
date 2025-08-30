@@ -1,4 +1,4 @@
-package com.app.satellitecomposeproject.ui.theme
+package com.app.uikit.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
