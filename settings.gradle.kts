@@ -20,7 +20,12 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "SatelliteComposeProject"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":core")
 include(":core:network")
 include(":core:common")
+include(":features")
+include(":features:home")
+include(":core:uikit")
+include(":features:detail")
