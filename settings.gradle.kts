@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "SatelliteComposeProject"
 include(":app")
- 
+include(":core")
+include(":core:network")
+include(":core:common")
