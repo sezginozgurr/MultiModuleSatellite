@@ -19,24 +19,18 @@ internal class HomeViewModel @Inject constructor(
 ) : ViewModel(),
     MVI<HomeUiState, HomeUiAction, HomeUiEffect> by mvi(HomeUiState(isLoading = true)) {
 
-    init {
-        onAction(HomeUiAction.Load)
-    }
+    init { onAction(HomeUiAction.Load) }
 
     override fun onAction(uiAction: HomeUiAction) {
         when (uiAction) {
             HomeUiAction.Load,
             HomeUiAction.Retry -> load()
 
-            is HomeUiAction.QueryChanged -> {
+            is HomeUiAction.QueryChanged ->
                 updateUiState { copy(query = uiAction.value) }
-            }
 
-            is HomeUiAction.ItemClicked -> {
-                viewModelScope.launch {
-                    emitUiEffect(HomeUiEffect.NavigateToDetails(uiAction.id))
-                }
-            }
+            is HomeUiAction.ItemClicked ->
+                viewModelScope.launch { emitUiEffect(HomeUiEffect.NavigateToDetails(uiAction.id)) }
         }
     }
 
@@ -45,13 +39,7 @@ internal class HomeViewModel @Inject constructor(
 
         getSatelliteList().fold(
             onSuccess = { list ->
-                updateUiState {
-                    copy(
-                        isLoading = false,
-                        satellites = list,
-                        error = null
-                    )
-                }
+                updateUiState { copy(isLoading = false, satellites = list, error = null) }
             },
             onError = { ex ->
                 val msg = ex.message.orEmpty().ifBlank { "Unknown error" }

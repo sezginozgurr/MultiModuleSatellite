@@ -2,6 +2,7 @@ package com.app.uikit.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,6 +21,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.app.uikit.theme.onSurface
 import com.app.uikit.theme.onSurfaceVariant
+import com.app.uikit.theme.regularBlack12
+import com.app.uikit.theme.regularBlack14
+import com.app.uikit.theme.regularBlack14Alpha50
 import com.app.uikit.theme.surface
 import com.app.uikit.theme.transparent
 
@@ -30,14 +34,21 @@ fun AppSearchBar(
     onSearch: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String = "Search",
-    height: Dp = 48.dp,
+    height: Dp = 56.dp,
     cornerRadius: Dp = 16.dp
 ) {
     TextField(
         value = query,
         onValueChange = onQueryChange,
         singleLine = true,
-        placeholder = { Text(placeholder, color = onSurfaceVariant) },
+        minLines = 1,
+        maxLines = 1,
+        placeholder = {
+            Text(
+                placeholder,
+                style = regularBlack14Alpha50
+            )
+        },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
@@ -71,6 +82,7 @@ fun AppSearchBar(
         ),
         modifier = modifier
             .fillMaxWidth()
-            .height(height)
+            .heightIn(min = height)
     )
 }
+

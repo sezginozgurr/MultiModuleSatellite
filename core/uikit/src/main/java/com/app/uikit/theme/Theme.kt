@@ -76,6 +76,13 @@ val regularBlack12 = TextStyle(
     fontWeight = FontWeight.Normal,
 )
 
+val regularBlack14 = TextStyle(
+    color = black,
+    fontSize = 14.sp,
+    fontFamily = SatelliteDMSansFamily,
+    fontWeight = FontWeight.Normal,
+)
+
 val regularLightGray15 = TextStyle(
     color = lightGray,
     fontSize = 15.sp,

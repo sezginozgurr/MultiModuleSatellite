@@ -56,7 +56,7 @@ import kotlinx.coroutines.flow.emptyFlow
 internal fun HomeScreenRoute(
     uiState: HomeUiState,
     uiEffect: Flow<HomeUiEffect>,
-    onAction: (HomeUiAction) -> Unit = {},
+    onAction: (HomeUiAction) -> Unit,
     onShipClick: (Int) -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -64,8 +64,7 @@ internal fun HomeScreenRoute(
     uiEffect.collectWithLifecycle { effect ->
         when (effect) {
             is HomeUiEffect.NavigateToDetails -> onShipClick(effect.id)
-            is HomeUiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT)
-                .show()
+            is HomeUiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -84,7 +83,6 @@ private fun HomeScreen(
         Box(Modifier.fillMaxSize()) {
 
             Column(Modifier.fillMaxSize()) {
-
                 Spacer(Modifier.height(8.dp))
 
                 AppSearchBar(
@@ -98,12 +96,7 @@ private fun HomeScreen(
 
                 val filtered =
                     if (uiState.query.isBlank()) uiState.satellites
-                    else uiState.satellites.filter {
-                        it.name.contains(
-                            uiState.query,
-                            ignoreCase = true
-                        )
-                    }
+                    else uiState.satellites.filter { it.name.contains(uiState.query, ignoreCase = true) }
 
                 when {
                     uiState.error != null -> {
@@ -134,7 +127,8 @@ private fun HomeScreen(
                     else -> {
                         LazyColumn(
                             modifier = Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(top = 12.dp, bottom = 24.dp)
+                            contentPadding = PaddingValues(top = 12.dp, bottom = 24.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             itemsIndexed(
                                 items = filtered,
@@ -182,8 +176,7 @@ private fun SatelliteRow(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 12.dp)
+        modifier = modifier.padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         val dotColor = if (item.active) statusGreen else statusRed
         Box(

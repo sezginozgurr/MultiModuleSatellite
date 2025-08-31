@@ -20,8 +20,11 @@ fun NavGraphBuilder.homeScreen(
         val viewModel = hiltViewModel<HomeViewModel>()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
-        HomeScreenRoute(uiState = uiState, uiEffect = uiEffect, onShipClick = {
-            onNavigateToDetail(it)
-        })
+        HomeScreenRoute(
+            uiState   = uiState,
+            uiEffect  = uiEffect,
+            onAction  = viewModel::onAction,
+            onShipClick = onNavigateToDetail
+        )
     }
 }
