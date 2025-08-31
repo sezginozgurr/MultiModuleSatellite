@@ -17,7 +17,7 @@ class SplashViewModel @Inject constructor() : ViewModel(),
     init {
         viewModelScope.launch {
             delay(3000)
-            emitUiEffect(SplashContract.UiEffect.NavigateHome)
+            emitUiEffect(UiEffect.NavigateHome)
         }
     }
 
