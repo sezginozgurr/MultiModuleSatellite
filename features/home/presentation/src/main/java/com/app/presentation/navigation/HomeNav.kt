@@ -6,8 +6,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.app.common.navigation.Screen
-import com.app.presentation.home.HomeScreen
-import com.app.presentation.home.HomeViewModel
+import com.app.presentation.HomeScreen
+import com.app.presentation.HomeViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable

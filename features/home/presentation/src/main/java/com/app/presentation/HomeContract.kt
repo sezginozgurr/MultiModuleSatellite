@@ -1,4 +1,4 @@
-package com.app.presentation.home
+package com.app.presentation
 
 internal object HomeContract {
     sealed interface UiEffect {

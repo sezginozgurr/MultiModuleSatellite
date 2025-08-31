@@ -1,4 +1,4 @@
-package com.app.presentation.home
+package com.app.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
