@@ -57,6 +57,6 @@ dependencies {
     //impl
     implementation(projects.core.common)
     implementation(projects.core.network)
-    implementation(projects.resources)
+    implementation(projects.core.resources)
 
 }

@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/network" />
+            <option value="$PROJECT_DIR$/core/resources" />
             <option value="$PROJECT_DIR$/core/uikit" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/detail" />
@@ -26,7 +27,6 @@
             <option value="$PROJECT_DIR$/features/home/presentation" />
             <option value="$PROJECT_DIR$/features/splash" />
             <option value="$PROJECT_DIR$/navigation" />
-            <option value="$PROJECT_DIR$/resources" />
           </set>
         </option>
       </GradleProjectSettings>
