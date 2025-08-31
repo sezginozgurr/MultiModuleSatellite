@@ -1,5 +1,7 @@
 package com.app.network.di
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,8 +21,11 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient =
+    fun provideOkHttpClient(
+        mock: MockSatelliteInterceptor
+    ): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(mock)
             .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
@@ -33,12 +38,18 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideGson(): Gson = GsonBuilder()
+        .serializeNulls()
+        .create()
+
+    @Provides
+    @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://api.aaa.com/")
+            .baseUrl("https://localhost/")
             .client(okHttpClient)
             .addConverterFactory(converterFactory)
             .build()
