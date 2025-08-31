@@ -1,7 +1,25 @@
 package com.app.presentation
 
+import com.app.domain.model.SatelliteListUiModel
+
 internal object HomeContract {
-    sealed interface UiEffect {
-        data object NavigateDetail : UiEffect
+
+    data class HomeUiState(
+        val isLoading: Boolean = false,
+        val query: String = "",
+        val satellites: List<SatelliteListUiModel> = emptyList(),
+        val error: String? = null
+    )
+
+    sealed interface HomeUiAction {
+        data object Load : HomeUiAction
+        data object Retry : HomeUiAction
+        data class QueryChanged(val value: String) : HomeUiAction
+        data class ItemClicked(val id: Int) : HomeUiAction
+    }
+
+    sealed interface HomeUiEffect {
+        data class NavigateToDetails(val id: Int) : HomeUiEffect
+        data class ShowToast(val message: String) : HomeUiEffect
     }
 }

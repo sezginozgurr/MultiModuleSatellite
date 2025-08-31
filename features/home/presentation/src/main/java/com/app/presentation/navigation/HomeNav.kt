@@ -6,7 +6,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.app.common.navigation.Screen
-import com.app.presentation.HomeScreen
+import com.app.presentation.HomeScreenRoute
 import com.app.presentation.HomeViewModel
 import kotlinx.serialization.Serializable
 
@@ -20,8 +20,8 @@ fun NavGraphBuilder.homeScreen(
         val viewModel = hiltViewModel<HomeViewModel>()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
-        HomeScreen(onNavigateToShipDetails = {
-            onNavigateToDetail(it) //todo
+        HomeScreenRoute(uiState = uiState, uiEffect = uiEffect, onShipClick = {
+            onNavigateToDetail(it)
         })
     }
 }

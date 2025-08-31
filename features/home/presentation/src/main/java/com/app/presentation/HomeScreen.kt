@@ -1,5 +1,6 @@
 package com.app.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,120 +18,156 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.app.common.extension.collectWithLifecycle
+import com.app.domain.model.SatelliteListUiModel
+import com.app.presentation.HomeContract.HomeUiAction
+import com.app.presentation.HomeContract.HomeUiEffect
+import com.app.presentation.HomeContract.HomeUiState
 import com.app.uikit.components.AppSearchBar
 import com.app.uikit.theme.divider
-import com.app.uikit.theme.onSurface
-import com.app.uikit.theme.onSurfaceVariant
+import com.app.uikit.theme.mediumBlack16
+import com.app.uikit.theme.regularBlack12Alpha50
+import com.app.uikit.theme.regularBlack14Alpha50
+import com.app.uikit.theme.regularBlack16Alpha50
 import com.app.uikit.theme.screenBg
 import com.app.uikit.theme.statusGreen
 import com.app.uikit.theme.statusRed
-
-enum class ShipStatus { Active, Passive }
-data class Ship(val name: String, val status: ShipStatus, val id: Int)
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
-fun HomeScreenRoute(
+internal fun HomeScreenRoute(
+    uiState: HomeUiState,
+    uiEffect: Flow<HomeUiEffect>,
+    onAction: (HomeUiAction) -> Unit = {},
     onShipClick: (Int) -> Unit = {},
-    onSearchSubmit: (String) -> Unit = {}
 ) {
-    val ships = remember {
-        listOf(
-            Ship("Starship-1", ShipStatus.Passive, 1),
-            Ship("Dragon-1", ShipStatus.Active, 2),
-            Ship("Starship-3", ShipStatus.Active, 3)
-        )
+    val context = LocalContext.current
+
+    uiEffect.collectWithLifecycle { effect ->
+        when (effect) {
+            is HomeUiEffect.NavigateToDetails -> onShipClick(effect.id)
+            is HomeUiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     HomeScreen(
-        allShips = ships,
-        onSearchSubmit = onSearchSubmit,
-        onNavigateToShipDetails = onShipClick
+        uiState = uiState,
+        onAction = onAction
     )
 }
 
 @Composable
-fun HomeScreen(
-    allShips: List<Ship> = emptyList(),
-    onSearchSubmit: (String) -> Unit = {},
-    onNavigateToShipDetails: (Int) -> Unit = {}
+private fun HomeScreen(
+    uiState: HomeUiState,
+    onAction: (HomeUiAction) -> Unit
 ) {
-    var query by remember { mutableStateOf("") }
-
-    val filtered = remember(query, allShips) {
-        if (query.isBlank()) allShips
-        else allShips.filter { it.name.contains(query, ignoreCase = true) }
-    }
-
     Surface(color = screenBg, modifier = Modifier.fillMaxSize()) {
-        Column(Modifier.fillMaxSize()) {
+        Box(Modifier.fillMaxSize()) {
 
-            Spacer(Modifier.height(16.dp))
+            Column(Modifier.fillMaxSize()) {
 
-            AppSearchBar(
-                query = query,
-                onQueryChange = { query = it },
-                onSearch = onSearchSubmit,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
+                Spacer(Modifier.height(8.dp))
 
-            Spacer(Modifier.height(8.dp))
+                AppSearchBar(
+                    query = uiState.query,
+                    onQueryChange = { onAction(HomeUiAction.QueryChanged(it)) },
+                    onSearch = {},
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
 
-            if (filtered.isEmpty()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(top = 32.dp),
-                    contentAlignment = Alignment.TopCenter
-                ) {
-                    Text(
-                        "No results",
-                        color = onSurfaceVariant,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(top = 12.dp, bottom = 24.dp)
-                ) {
-                    itemsIndexed(
-                        items = filtered,
-                        key = { _, item -> item.name }
-                    ) { index, item ->
-                        ShipRow(
-                            ship = item,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { onNavigateToShipDetails(item.id) }
+                Spacer(Modifier.height(8.dp))
+
+                val filtered =
+                    if (uiState.query.isBlank()) uiState.satellites
+                    else uiState.satellites.filter {
+                        it.name.contains(
+                            uiState.query,
+                            ignoreCase = true
                         )
+                    }
 
-                        if (index < filtered.lastIndex) {
-                            HorizontalDivider(
-                                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                                thickness = 0.8.dp,
-                                color = divider.copy(alpha = 0.9f)
-                            )
+                when {
+                    uiState.error != null -> {
+                        Column(
+                            Modifier
+                                .fillMaxSize()
+                                .padding(top = 32.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Top
+                        ) {
+                            Text(uiState.error, style = regularBlack14Alpha50)
+                            Spacer(Modifier.height(8.dp))
+                            Button(onClick = { onAction(HomeUiAction.Retry) }) { Text("Retry") }
                         }
                     }
+
+                    filtered.isEmpty() -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 32.dp),
+                            contentAlignment = Alignment.TopCenter
+                        ) {
+                            Text("No results", style = regularBlack14Alpha50)
+                        }
+                    }
+
+                    else -> {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(top = 12.dp, bottom = 24.dp)
+                        ) {
+                            itemsIndexed(
+                                items = filtered,
+                                key = { _, item -> item.id }
+                            ) { index, item ->
+                                SatelliteRow(
+                                    item = item,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable { onAction(HomeUiAction.ItemClicked(item.id)) }
+                                )
+
+                                if (index < filtered.lastIndex) {
+                                    HorizontalDivider(
+                                        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                                        thickness = 0.8.dp,
+                                        color = divider.copy(alpha = 0.9f)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (uiState.isLoading) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.2f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
                 }
             }
         }
@@ -138,8 +175,8 @@ fun HomeScreen(
 }
 
 @Composable
-private fun ShipRow(
-    ship: Ship,
+private fun SatelliteRow(
+    item: SatelliteListUiModel,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -148,18 +185,14 @@ private fun ShipRow(
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        val dotColor = when (ship.status) {
-            ShipStatus.Active -> statusGreen
-            ShipStatus.Passive -> statusRed
-        }
+        val dotColor = if (item.active) statusGreen else statusRed
         Box(
             modifier = Modifier
                 .size(16.dp)
                 .clip(CircleShape)
                 .background(dotColor)
                 .semantics(mergeDescendants = true) {
-                    contentDescription =
-                        if (ship.status == ShipStatus.Active) "Active" else "Passive"
+                    contentDescription = if (item.active) "Active" else "Passive"
                 }
         )
 
@@ -167,18 +200,14 @@ private fun ShipRow(
 
         Column {
             Text(
-                text = ship.name,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = if (ship.status == ShipStatus.Active) FontWeight.SemiBold else FontWeight.Medium
-                ),
-                color = if (ship.status == ShipStatus.Passive) onSurfaceVariant else onSurface,
+                text = item.name,
+                style = if (item.active) mediumBlack16 else regularBlack16Alpha50,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = if (ship.status == ShipStatus.Active) "Active" else "Passive",
-                style = MaterialTheme.typography.bodySmall,
-                color = onSurfaceVariant
+                text = if (item.active) "Active" else "Passive",
+                style = regularBlack12Alpha50
             )
         }
     }
@@ -186,13 +215,64 @@ private fun ShipRow(
 
 @Preview(showBackground = true, backgroundColor = 0xFFF6F6F6)
 @Composable
-private fun HomeScreenPreview() {
-    val mock = listOf(
-        Ship("Starship-1", ShipStatus.Passive, 1),
-        Ship("Dragon-1", ShipStatus.Active, 2),
-        Ship("Starship-3", ShipStatus.Active, 3)
+private fun HomeScreenPreviewWithData() {
+    val mock = HomeUiState(
+        isLoading = false,
+        query = "",
+        satellites = listOf(
+            SatelliteListUiModel(id = 1, active = false, name = "Starship-1"),
+            SatelliteListUiModel(id = 2, active = true,  name = "Dragon-1"),
+            SatelliteListUiModel(id = 3, active = true,  name = "Starship-3")
+        ),
+        error = null
     )
+
     MaterialTheme(colorScheme = lightColorScheme()) {
-        HomeScreen(allShips = mock)
+        HomeScreenRoute(
+            uiState = mock,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            onShipClick = {}
+        )
+    }
+}
+
+@Preview(name = "Loading", showBackground = true, backgroundColor = 0xFFF6F6F6)
+@Composable
+private fun HomeScreenPreviewLoading() {
+    val mock = HomeUiState(
+        isLoading = true,
+        query = "",
+        satellites = emptyList(),
+        error = null
+    )
+
+    MaterialTheme(colorScheme = lightColorScheme()) {
+        HomeScreenRoute(
+            uiState = mock,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            onShipClick = {}
+        )
+    }
+}
+
+@Preview(name = "Error", showBackground = true, backgroundColor = 0xFFF6F6F6)
+@Composable
+private fun HomeScreenPreviewError() {
+    val mock = HomeUiState(
+        isLoading = false,
+        query = "",
+        satellites = emptyList(),
+        error = "Something went wrong"
+    )
+
+    MaterialTheme(colorScheme = lightColorScheme()) {
+        HomeScreenRoute(
+            uiState = mock,
+            uiEffect = emptyFlow(),
+            onAction = {},
+            onShipClick = {}
+        )
     }
 }

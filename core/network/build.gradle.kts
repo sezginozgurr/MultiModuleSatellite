@@ -50,6 +50,7 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(projects.core.common)
+    implementation(projects.core.resources)
 
     implementation(libs.bundles.network)
 }

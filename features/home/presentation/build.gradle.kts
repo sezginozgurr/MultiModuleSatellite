@@ -55,6 +55,8 @@ dependencies {
     implementation(projects.core.uikit)
     implementation(projects.core.common)
     implementation(projects.core.network)
+    implementation(projects.features.home.domain)
+    implementation(projects.features.home.data)
 
     //hilt
     implementation(libs.hilt.android)
