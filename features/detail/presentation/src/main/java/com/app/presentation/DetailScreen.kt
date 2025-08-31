@@ -1,4 +1,4 @@
-package com.app.presentation.detail
+package com.app.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.uikit.theme.onSurface
 import com.app.uikit.theme.onSurfaceVariant
+import com.app.uikit.theme.regularBlack12
+import com.app.uikit.theme.regularBlack14Alpha50
+import com.app.uikit.theme.regularBlack24
 import com.app.uikit.theme.screenBg
 
 data class ShipDetail( //will be delete
@@ -30,7 +33,7 @@ data class ShipDetail( //will be delete
     val lastPosition: Pair<Double, Double>
 )
 
-@Composable
+/* @Composable
 fun DetailScreen(
     detail: ShipDetail,
     modifier: Modifier = Modifier
@@ -48,13 +51,13 @@ fun DetailScreen(
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),
                     text = detail.name,
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = regularBlack12,
                     color = onSurface
                 )
                 Text(
                     modifier = Modifier.padding(bottom = 66.dp),
                     text = detail.launchDateText,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = regularBlack12,
                     color = onSurfaceVariant
                 )
             }
@@ -95,7 +98,7 @@ private fun LabeledValue(
                 append(value)
             }
         },
-        style = MaterialTheme.typography.bodyMedium,
+        style = regularBlack14Alpha50,
         modifier = modifier
     )
 }
@@ -114,5 +117,5 @@ private fun DetailScreenPreview() {
     MaterialTheme(colorScheme = lightColorScheme()) {
         DetailScreen(detail = mockDetail)
     }
-}
+} */
 
