@@ -58,6 +58,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
 
     implementation(projects.core.uikit)
+    implementation(projects.core.network)
+    implementation(projects.core.common)
+    implementation(projects.navigation)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
