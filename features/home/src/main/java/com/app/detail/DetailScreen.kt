@@ -21,7 +21,7 @@ import com.app.uikit.theme.onSurface
 import com.app.uikit.theme.onSurfaceVariant
 import com.app.uikit.theme.screenBg
 
-data class ShipDetail(
+data class ShipDetail( //will be delete
     val name: String,
     val launchDateText: String,
     val height: Int,

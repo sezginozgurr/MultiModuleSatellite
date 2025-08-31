@@ -63,15 +63,15 @@ fun HomeScreenRoute(
     HomeScreen(
         allShips = ships,
         onSearchSubmit = onSearchSubmit,
-        onShipClick = onShipClick
+        onNavigateToShipDetails = onShipClick
     )
 }
 
 @Composable
 fun HomeScreen(
-    allShips: List<Ship>,
+    allShips: List<Ship> = emptyList(),
     onSearchSubmit: (String) -> Unit = {},
-    onShipClick: (Ship) -> Unit = {}
+    onNavigateToShipDetails: (Ship) -> Unit = {}
 ) {
     var query by remember { mutableStateOf("") }
 
@@ -120,7 +120,7 @@ fun HomeScreen(
                             ship = item,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { onShipClick(item) }
+                                .clickable { onNavigateToShipDetails(item) }
                         )
 
                         if (index < filtered.lastIndex) {
