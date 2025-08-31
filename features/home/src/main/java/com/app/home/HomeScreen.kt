@@ -45,18 +45,18 @@ import com.app.uikit.theme.statusGreen
 import com.app.uikit.theme.statusRed
 
 enum class ShipStatus { Active, Passive }
-data class Ship(val name: String, val status: ShipStatus)
+data class Ship(val name: String, val status: ShipStatus, val id: Int)
 
 @Composable
 fun HomeScreenRoute(
-    onShipClick: (Ship) -> Unit = {},
+    onShipClick: (Int) -> Unit = {},
     onSearchSubmit: (String) -> Unit = {}
 ) {
     val ships = remember {
         listOf(
-            Ship("Starship-1", ShipStatus.Passive),
-            Ship("Dragon-1", ShipStatus.Active),
-            Ship("Starship-3", ShipStatus.Active)
+            Ship("Starship-1", ShipStatus.Passive, 1),
+            Ship("Dragon-1", ShipStatus.Active, 2),
+            Ship("Starship-3", ShipStatus.Active, 3)
         )
     }
 
@@ -71,7 +71,7 @@ fun HomeScreenRoute(
 fun HomeScreen(
     allShips: List<Ship> = emptyList(),
     onSearchSubmit: (String) -> Unit = {},
-    onNavigateToShipDetails: (Ship) -> Unit = {}
+    onNavigateToShipDetails: (Int) -> Unit = {}
 ) {
     var query by remember { mutableStateOf("") }
 
@@ -120,7 +120,7 @@ fun HomeScreen(
                             ship = item,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { onNavigateToShipDetails(item) }
+                                .clickable { onNavigateToShipDetails(item.id) }
                         )
 
                         if (index < filtered.lastIndex) {
@@ -188,9 +188,9 @@ private fun ShipRow(
 @Composable
 private fun HomeScreenPreview() {
     val mock = listOf(
-        Ship("Starship-1", ShipStatus.Passive),
-        Ship("Dragon-1", ShipStatus.Active),
-        Ship("Starship-3", ShipStatus.Active)
+        Ship("Starship-1", ShipStatus.Passive, 1),
+        Ship("Dragon-1", ShipStatus.Active, 2),
+        Ship("Starship-3", ShipStatus.Active, 3)
     )
     MaterialTheme(colorScheme = lightColorScheme()) {
         HomeScreen(allShips = mock)

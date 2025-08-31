@@ -8,14 +8,13 @@ import androidx.navigation.compose.composable
 import com.app.common.navigation.Screen
 import com.app.home.HomeScreen
 import com.app.home.HomeViewModel
-import com.app.home.Ship
 import kotlinx.serialization.Serializable
 
 @Serializable
 data object Home : Screen
 
 fun NavGraphBuilder.homeScreen(
-    onNavigateToDetail: (Ship) -> Unit,
+    onNavigateToDetail: (Int) -> Unit,
 ) {
     composable<Home> {
         val viewModel = hiltViewModel<HomeViewModel>()

@@ -20,6 +20,6 @@ fun SatelliteAppNavGraph(
         splashScreen(
             onNavigateHome = { navController.navigateWithPopUpTo(HomeFlow, Splash) }
         )
-        //mainFlowNavigation(navController)
+        homeNavigation(navController)
     }
 }
