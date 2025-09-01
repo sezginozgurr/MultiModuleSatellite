@@ -46,5 +46,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(projects.features.splash)
     implementation(projects.features.home.presentation)
+    implementation(projects.features.detail.presentation)
     implementation(projects.core.common)
 }

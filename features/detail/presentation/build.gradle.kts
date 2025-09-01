@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.app.features.home.presentation"
+    namespace = "com.app.features.detail.presentation"
     compileSdk = 36
 
     defaultConfig {
@@ -55,8 +55,8 @@ dependencies {
     implementation(projects.core.uikit)
     implementation(projects.core.common)
     implementation(projects.core.network)
-    implementation(projects.features.home.domain)
-    implementation(projects.features.home.data)
+    implementation(projects.features.detail.domain)
+    implementation(projects.features.detail.data)
 
     //hilt
     implementation(libs.hilt.android)

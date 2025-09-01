@@ -1,7 +1,7 @@
 package com.app.data.di
 
 import com.app.data.repository.SatelliteDetailRepositoryImpl
-import com.app.domain.repository.SatelliteRepository
+import com.app.domain.repository.SatelliteDetailRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +12,6 @@ import dagger.hilt.components.SingletonComponent
 abstract class SatelliteDetailRepositoryModule {
 
     @Binds
-    abstract fun bindRepository(repository: SatelliteDetailRepositoryImpl): SatelliteRepository
+    abstract fun bindDetailRepository(repository: SatelliteDetailRepositoryImpl): SatelliteDetailRepository
 
 }
