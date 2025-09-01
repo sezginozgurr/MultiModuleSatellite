@@ -2,6 +2,8 @@ package com.app.domain.usecase
 
 import com.app.common.Resource
 import com.app.common.extension.combineResult
+import com.app.common.manager.DataStoreManager
+import com.app.common.manager.StoredPosition
 import com.app.domain.model.SatelliteDetailUiModel
 import com.app.domain.model.SatellitePositionUiModel
 import com.app.domain.repository.SatelliteDetailRepository
@@ -10,7 +12,8 @@ import kotlinx.coroutines.supervisorScope
 import javax.inject.Inject
 
 class GetSatelliteDetailAndPositionsUseCase @Inject constructor(
-    private val repository: SatelliteDetailRepository
+    private val repository: SatelliteDetailRepository,
+    private val dataStore: DataStoreManager
 ) {
     suspend operator fun invoke(id: Int): Resource<Pair<SatelliteDetailUiModel, SatellitePositionUiModel>> =
         supervisorScope {
@@ -21,6 +24,16 @@ class GetSatelliteDetailAndPositionsUseCase @Inject constructor(
                 restResult1 = detailDeferred.await(),
                 restResult2 = positionsDeferred.await()
             ) { detail, positions ->
+                val listForId = positions.positionList
+                    .firstOrNull { it.id == id.toString() }
+                    ?.positions
+                    .orEmpty()
+
+                dataStore.savePositions(
+                    id,
+                    listForId.map { StoredPosition(it.posX, it.posY) }
+                )
+
                 Pair(detail, positions)
             }
         }

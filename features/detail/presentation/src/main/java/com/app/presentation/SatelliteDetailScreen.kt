@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.app.common.extension.formatThousands
 import com.app.common.extension.toDisplayDate
+import com.app.common.extension.trimZeros
 import com.app.presentation.SatelliteDetailContract.DetailUiState
 import com.app.resources.R
 import com.app.uikit.theme.black
@@ -36,12 +37,12 @@ fun SatelliteDetailScreen(
 ) {
     val detail = uiState.detail
 
-    val displayDate = detail.firstFlight.toDisplayDate("dd.MM.yyyy")
+    val displayDate = detail.firstFlight.toDisplayDate()
     val heightMass = "${detail.height.formatThousands()}/${detail.mass.formatThousands()}"
     val cost = detail.costPerLaunch.formatThousands()
-    /* val lastPos = detail.lastPosition?.let { p ->
-        "(${p.posX.trimZeros()},${p.posY.trimZeros()})"
-    } ?: "N/A" */
+    val lastPosText = uiState.currentPosition
+        ?.let { "(${it.posX.trimZeros()},${it.posY.trimZeros()})" }
+        ?: ""
 
     @Composable
     fun LabeledLine(label: String, value: String, topPadding: Dp) {
@@ -90,7 +91,7 @@ fun SatelliteDetailScreen(
 
             LabeledLine(label = "Height/Mass", value = heightMass, topPadding = 32.dp)
             LabeledLine(label = "Cost", value = cost, topPadding = 16.dp)
-            LabeledLine(label = "Last Position", value = "lastPos", topPadding = 16.dp)
+            LabeledLine(label = "Last Position", value = lastPosText, topPadding = 16.dp)
         }
     }
 }

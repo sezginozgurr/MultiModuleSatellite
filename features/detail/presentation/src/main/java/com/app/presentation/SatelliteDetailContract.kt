@@ -1,13 +1,13 @@
 package com.app.presentation
 
-import com.app.domain.model.PositionUiModel
+import com.app.domain.model.Positions
 import com.app.domain.model.SatelliteDetailUiModel
 
 object SatelliteDetailContract {
     data class DetailUiState(
         val isLoading: Boolean = false,
         val title: String = "",
-        val positions: List<PositionUiModel> = emptyList(),
+        val currentPosition: Positions? = null,
         val detail: SatelliteDetailUiModel = SatelliteDetailUiModel(),
         val error: String? = null
     )
