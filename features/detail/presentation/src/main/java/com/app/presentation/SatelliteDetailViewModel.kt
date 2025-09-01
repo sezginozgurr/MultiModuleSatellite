@@ -46,7 +46,7 @@ class SatelliteDetailViewModel @Inject constructor(
                     copy(
                         isLoading = false,
                         detail = detail,
-                        positions = positions.positionList[1].positions[1],
+                        positions = positions.positionList,
                         error = null
                     )
                 }
