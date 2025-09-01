@@ -41,4 +41,6 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(projects.core.common)
+
+    implementation(libs.kotlinx.coroutines.core)
 }
