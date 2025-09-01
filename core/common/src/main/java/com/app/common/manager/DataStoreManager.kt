@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 private const val DATASTORE_NAME = "satellite_positions_datastore"
 private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
@@ -19,9 +21,9 @@ data class StoredPosition(
     val posY: Double = 0.0
 )
 
-class DataStoreManager(
-    private val context: Context,
-    private val gson: Gson = Gson()
+class DataStoreManager@Inject constructor(
+    @param:ApplicationContext private val context: Context,
+    private val gson: Gson
 ) {
     private fun positionsKey(id: Int): Preferences.Key<String> =
         stringPreferencesKey("positions_$id")
