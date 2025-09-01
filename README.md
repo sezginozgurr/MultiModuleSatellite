@@ -1,6 +1,6 @@
 # Multi Module Uydu Uygulaması
 
-Bu proje, modern Android geliştirme tekniklerini kullanarak oluşturulmuş çok modüllü bir kripto para takip uygulamasıdır.
+Bu proje, modern Android geliştirme tekniklerini kullanarak oluşturulmuş çok modüllü bir uydu takip uygulamasıdır.
 
 ## Ekran Görüntüleri
 
