@@ -16,7 +16,9 @@ object HomeFlow : Screen
 
 internal fun NavGraphBuilder.homeNavigation(navController: NavHostController) {
     navigation<HomeFlow>(Home) {
-        homeScreen(onNavigateToDetail = { navController.navigate(Detail(it)) })
+        homeScreen(onNavigateToDetail = { id, name ->
+            navController.navigate(Detail(id = id, name = name))
+        })
         detailScreen { navController.popBackStack() }
     }
 }

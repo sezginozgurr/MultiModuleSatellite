@@ -57,14 +57,15 @@ internal fun HomeScreenRoute(
     uiState: HomeUiState,
     uiEffect: Flow<HomeUiEffect>,
     onAction: (HomeUiAction) -> Unit,
-    onShipClick: (Int) -> Unit = {},
+    onShipClick: (Int, String) -> Unit,
 ) {
     val context = LocalContext.current
 
     uiEffect.collectWithLifecycle { effect ->
         when (effect) {
-            is HomeUiEffect.NavigateToDetails -> onShipClick(effect.id)
-            is HomeUiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
+            is HomeUiEffect.NavigateToDetails -> onShipClick(effect.id, effect.name)
+            is HomeUiEffect.ShowToast -> Toast.makeText(context, effect.message, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -96,7 +97,12 @@ private fun HomeScreen(
 
                 val filtered =
                     if (uiState.query.isBlank()) uiState.satellites
-                    else uiState.satellites.filter { it.name.contains(uiState.query, ignoreCase = true) }
+                    else uiState.satellites.filter {
+                        it.name.contains(
+                            uiState.query,
+                            ignoreCase = true
+                        )
+                    }
 
                 when {
                     uiState.error != null -> {
@@ -138,7 +144,14 @@ private fun HomeScreen(
                                     item = item,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .clickable { onAction(HomeUiAction.ItemClicked(item.id)) }
+                                        .clickable {
+                                            onAction(
+                                                HomeUiAction.ItemClicked(
+                                                    id = item.id,
+                                                    name = item.name
+                                                )
+                                            )
+                                        }
                                 )
 
                                 if (index < filtered.lastIndex) {
@@ -214,8 +227,8 @@ private fun HomeScreenPreviewWithData() {
         query = "",
         satellites = listOf(
             SatelliteListUiModel(id = 1, active = false, name = "Starship-1"),
-            SatelliteListUiModel(id = 2, active = true,  name = "Dragon-1"),
-            SatelliteListUiModel(id = 3, active = true,  name = "Starship-3")
+            SatelliteListUiModel(id = 2, active = true, name = "Dragon-1"),
+            SatelliteListUiModel(id = 3, active = true, name = "Starship-3")
         ),
         error = null
     )
@@ -225,7 +238,7 @@ private fun HomeScreenPreviewWithData() {
             uiState = mock,
             uiEffect = emptyFlow(),
             onAction = {},
-            onShipClick = {}
+            onShipClick = { _, _ -> }
         )
     }
 }
@@ -245,7 +258,7 @@ private fun HomeScreenPreviewLoading() {
             uiState = mock,
             uiEffect = emptyFlow(),
             onAction = {},
-            onShipClick = {}
+            onShipClick = { _, _ -> }
         )
     }
 }
@@ -265,7 +278,7 @@ private fun HomeScreenPreviewError() {
             uiState = mock,
             uiEffect = emptyFlow(),
             onAction = {},
-            onShipClick = {}
+            onShipClick = { _, _ -> }
         )
     }
 }

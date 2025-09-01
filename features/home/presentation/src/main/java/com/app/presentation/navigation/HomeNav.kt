@@ -14,16 +14,16 @@ import kotlinx.serialization.Serializable
 data object Home : Screen
 
 fun NavGraphBuilder.homeScreen(
-    onNavigateToDetail: (Int) -> Unit,
+    onNavigateToDetail: (Int, String) -> Unit,
 ) {
     composable<Home> {
         val viewModel = hiltViewModel<HomeViewModel>()
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val uiEffect = viewModel.uiEffect
         HomeScreenRoute(
-            uiState   = uiState,
-            uiEffect  = uiEffect,
-            onAction  = viewModel::onAction,
+            uiState = uiState,
+            uiEffect = uiEffect,
+            onAction = viewModel::onAction,
             onShipClick = onNavigateToDetail
         )
     }

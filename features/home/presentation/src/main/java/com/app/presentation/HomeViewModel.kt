@@ -30,7 +30,7 @@ internal class HomeViewModel @Inject constructor(
                 updateUiState { copy(query = uiAction.value) }
 
             is HomeUiAction.ItemClicked ->
-                viewModelScope.launch { emitUiEffect(HomeUiEffect.NavigateToDetails(uiAction.id)) }
+                viewModelScope.launch { emitUiEffect(HomeUiEffect.NavigateToDetails(uiAction.id, name = uiAction.name)) }
         }
     }
 

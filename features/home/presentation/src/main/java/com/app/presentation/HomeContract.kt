@@ -15,11 +15,11 @@ internal object HomeContract {
         data object Load : HomeUiAction
         data object Retry : HomeUiAction
         data class QueryChanged(val value: String) : HomeUiAction
-        data class ItemClicked(val id: Int) : HomeUiAction
+        data class ItemClicked(val id: Int, val name: String) : HomeUiAction
     }
 
     sealed interface HomeUiEffect {
-        data class NavigateToDetails(val id: Int) : HomeUiEffect
+        data class NavigateToDetails(val id: Int, val name: String) : HomeUiEffect
         data class ShowToast(val message: String) : HomeUiEffect
     }
 }
