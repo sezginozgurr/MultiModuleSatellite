@@ -8,6 +8,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
+import org.json.JSONArray
+import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,20 +19,18 @@ class MockSatelliteInterceptor @Inject constructor(
 ) : Interceptor {
 
     private val listJson by lazy {
-        context.resources.openRawResource(R.raw.satellite_list)
-            .bufferedReader().use { it.readText() }
+        context.assets.open("satellite_list.json").bufferedReader().use { it.readText() }
     }
 
     private val detailsArray by lazy {
-        val txt = context.resources.openRawResource(R.raw.satellite_detail)
-            .bufferedReader().use { it.readText() }
-        org.json.JSONArray(txt)
+        val txt =
+            context.assets.open("satellite_detail.json").bufferedReader().use { it.readText() }
+        JSONArray(txt)
     }
 
     private val positionsRoot by lazy {
-        val txt = context.resources.openRawResource(R.raw.position)
-            .bufferedReader().use { it.readText() }
-        org.json.JSONObject(txt)
+        val txt = context.assets.open("position.json").bufferedReader().use { it.readText() }
+        JSONObject(txt)
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -45,7 +45,10 @@ class MockSatelliteInterceptor @Inject constructor(
             path.matches(Regex(".*/satellites/\\d+$")) -> {
                 val id = path.substringAfterLast("/").toInt()
                 val obj = findDetailById(id)
-                if (obj != null) ok(req, obj.toString()) else notFound(req, "Satellite $id not found")
+                if (obj != null) ok(req, obj.toString()) else notFound(
+                    req,
+                    "Satellite $id not found"
+                )
             }
 
             path.matches(Regex(".*/positions/\\d+$")) -> {
