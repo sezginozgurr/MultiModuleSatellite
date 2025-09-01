@@ -1,0 +1,58 @@
+[versions]
+# --- App Informations START --- #
+compileSdk = "36"
+minSdk = "24"
+targetSdk = "36"
+versionCode = "1"
+versionName = "1.0"
+testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+isMinifyEnabled = "false"
+
+defaultProguardFile = "proguard-android-optimize.txt"
+proguardRules = "proguard-rules.pro"
+consumerRules = "consumer-rules.pro"
+
+jvm = "17"
+# --- App Informations END --- #
+
+# --- Namespace START --- #
+namespace-app = "com.app.satellitecomposeproject"
+
+namespace-core-common = "com.app.common"
+namespace-core-network = "com.app.network"
+namespace-core-resources = "com.app.resources"
+namespace-core-uikit = "com.app.uikit"
+
+namespace-features-detail-data = "com.app.features.detail.data"
+namespace-features-detail-domain = "com.app.features.detail.domain"
+namespace-features-detail-presentation = "com.app.features.detail.presentation"
+
+namespace-features-home-data = "com.app.features.home.data"
+namespace-features-home-domain = "com.app.features.home.domain"
+namespace-features-home-presentation = "com.app.features.home.presentation"
+
+namespace-features-splash = "com.app.features.splash"
+namespace-features-navigation = "com.app.features.navigation"
+# --- Namespace END --- #
+
+# --- ApplicationID START --- #
+applicationId-satellite = "com.app.satellitecomposeproject"
+# --- ApplicationID END --- #
+
+agp = "8.11.1"
+kotlin = "2.2.0"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+# Conventions
+application-default = { id = "application-default" }
+library-default = { id = "library-default" }
+library-nonui-default = { id = "library-nonui-default" }
+
+jetpack-compose = { id = "jetpack-compose" }
+jetpack-navigation3 = { id = "jetpack-navigation3" }
+hilt-android = { id = "hilt-android" }

@@ -1,10 +1,10 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
+    alias(default.plugins.android.library)
+    alias(default.plugins.kotlin.android)
+    alias(default.plugins.kotlin.compose)
+    alias(network.plugins.jetbrains.kotlin.serialization)
+    alias(google.plugins.hilt)
+    alias(google.plugins.ksp)
 }
 
 android {
@@ -36,22 +36,7 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    debugImplementation(libs.androidx.ui.tooling)
-    implementation(libs.kotlin.serialization.json)
-
-    //impl
+    //project
     implementation(projects.core.uikit)
     implementation(projects.core.common)
     implementation(projects.core.network)
@@ -59,9 +44,24 @@ dependencies {
     implementation(projects.features.detail.domain)
     implementation(projects.features.detail.data)
 
+    implementation(androidx.lifecycle.runtime.ktx)
+    implementation(compose.androidx.activity.compose)
+    implementation(platform(compose.androidx.compose.bom))
+    implementation(compose.androidx.ui)
+    implementation(compose.androidx.ui.graphics)
+    implementation(compose.androidx.ui.tooling.preview)
+    implementation(compose.androidx.material3)
+    implementation(network.kotlin.serialization.json)
+    testImplementation(test.junit)
+    androidTestImplementation(test.androidx.junit)
+    androidTestImplementation(test.androidx.espresso.core)
+    androidTestImplementation(platform(compose.androidx.compose.bom))
+    debugImplementation(compose.androidx.ui.tooling)
+
+    implementation(compose.androidx.hilt.navigation.compose)
+    implementation(compose.androidx.navigation.compose)
+
     //hilt
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.navigation.compose)
-    ksp(libs.hilt.android.compiler)
+    implementation(google.hilt.android)
+    ksp(google.hilt.android.compiler)
 }

@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.ksp)
+    alias(default.plugins.android.application)
+    alias(default.plugins.kotlin.android)
+    alias(default.plugins.kotlin.compose)
+    alias(google.plugins.hilt)
+    alias(google.plugins.ksp)
 }
 
 android {
@@ -43,28 +43,28 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    debugImplementation(libs.androidx.ui.tooling)
-
     implementation(projects.core.uikit)
     implementation(projects.core.network)
     implementation(projects.core.common)
     implementation(projects.navigation)
 
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
+    implementation(androidx.core.ktx)
+    implementation(androidx.lifecycle.runtime.ktx)
+    implementation(compose.androidx.activity.compose)
+    implementation(platform(compose.androidx.compose.bom))
+    implementation(compose.androidx.ui)
+    implementation(compose.androidx.ui.graphics)
+    implementation(compose.androidx.ui.tooling.preview)
+    implementation(compose.androidx.material3)
+    testImplementation(test.junit)
+    androidTestImplementation(test.androidx.junit)
+    androidTestImplementation(test.androidx.espresso.core)
+    androidTestImplementation(platform(compose.androidx.compose.bom))
+    debugImplementation(compose.androidx.ui.tooling)
 
-    implementation(libs.kotlin.serialization.json)
+    implementation(google.hilt.android)
+    implementation(compose.androidx.hilt.navigation.compose)
+    ksp(google.hilt.android.compiler)
+
+    implementation(network.kotlin.serialization.json)
 }

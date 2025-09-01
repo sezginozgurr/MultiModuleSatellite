@@ -1,14 +1,14 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.ksp)
+    alias(default.plugins.android.library)
+    alias(default.plugins.kotlin.android)
+    alias(default.plugins.kotlin.compose)
+    alias(network.plugins.jetbrains.kotlin.serialization)
+    alias(google.plugins.hilt)
+    alias(google.plugins.ksp)
 }
 
 android {
-    namespace = "com.app.splash"
+    namespace = "com.app.features.splash"
     compileSdk = 36
 
     defaultConfig {
@@ -37,26 +37,25 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.kotlin.serialization.json)
-    implementation(libs.lottie.compose)
-
-
-    //hilt
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-
-    //impl
+    //projects
     implementation(projects.core.common)
     implementation(projects.core.network)
     implementation(projects.core.resources)
+
+    implementation(androidx.core.ktx)
+    implementation(androidx.appcompat)
+    implementation(androidx.material)
+    implementation(androidx.lifecycle.runtime.ktx)
+    implementation(compose.androidx.activity.compose)
+    implementation(platform(compose.androidx.compose.bom))
+    implementation(network.kotlin.serialization.json)
+    implementation(other.lottie.compose)
+
+    implementation(compose.androidx.navigation.compose)
+    implementation(compose.androidx.hilt.navigation.compose)
+
+    //hilt
+    implementation(google.hilt.android)
+    ksp(google.hilt.android.compiler)
 
 }

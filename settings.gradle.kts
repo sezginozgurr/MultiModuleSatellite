@@ -17,10 +17,39 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+    versionCatalogs {
+        create("default") {
+            from(files("gradle/libDefault.versions.toml"))
+        }
+        create("androidx") {
+            from(files("gradle/libAndroidx.versions.toml"))
+        }
+        create("compose") {
+            from(files("gradle/libCompose.versions.toml"))
+        }
+        create("test") {
+            from(files("gradle/libTests.versions.toml"))
+        }
+        create("google") {
+            from(files("gradle/libGoogle.versions.toml"))
+        }
+        create("jetbrains") {
+            from(files("gradle/libJetbrains.versions.toml"))
+        }
+        create("other") {
+            from(files("gradle/libOther.versions.toml"))
+        }
+        create("network") {
+            from(files("gradle/libNetwork.versions.toml"))
+        }
+    }
 }
 
-rootProject.name = "SatelliteComposeProject"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+includeBuild("build-logic")
+
+rootProject.name = "SatelliteComposeProject"
 include(":app")
 include(":core")
 include(":core:network")

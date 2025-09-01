@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt.android)
-    alias(libs.plugins.ksp)
+    alias(default.plugins.android.library)
+    alias(default.plugins.kotlin.android)
+    alias(google.plugins.hilt)
+    alias(google.plugins.ksp)
 }
 
 android {
-    namespace = "com.app.domain"
+    namespace = "com.app.features.home.domain"
     compileSdk = 36
 
     defaultConfig {
@@ -35,10 +35,10 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    ksp(libs.hilt.android.compiler)
-
     implementation(projects.core.common)
+
+    implementation(compose.androidx.hilt.navigation.compose)
+    implementation(google.hilt.android)
+    ksp(google.hilt.android.compiler)
+
 }

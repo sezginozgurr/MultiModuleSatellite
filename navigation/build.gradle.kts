@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
+    alias(default.plugins.android.library)
+    alias(default.plugins.kotlin.android)
+    alias(default.plugins.kotlin.compose)
+    alias(network.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -35,17 +35,17 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-
-    implementation(libs.androidx.hilt.navigation.compose)
+    //projects
     implementation(projects.features.splash)
     implementation(projects.features.home.presentation)
     implementation(projects.features.detail.presentation)
     implementation(projects.core.common)
+
+    implementation(androidx.core.ktx)
+    implementation(androidx.appcompat)
+    implementation(androidx.material)
+    implementation(androidx.lifecycle.runtime.ktx)
+    implementation(compose.androidx.activity.compose)
+    implementation(platform(compose.androidx.compose.bom))
+    implementation(compose.androidx.hilt.navigation.compose)
 }

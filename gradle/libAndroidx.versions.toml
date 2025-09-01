@@ -1,0 +1,25 @@
+[versions]
+# Default
+coreKtx = "1.16.0"
+appcompat = "1.7.1"
+material = "1.12.0"
+lifecycleRuntimeKtx = "2.9.2"
+datastore = "1.1.7"
+
+[libraries]
+# Defult
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
+[bundles]
+# Default
+default-lib = [
+    "core-ktx",
+    "appcompat",
+    "material",
+    "lifecycle-runtime-ktx",
+    "datastore-preferences",
+]
