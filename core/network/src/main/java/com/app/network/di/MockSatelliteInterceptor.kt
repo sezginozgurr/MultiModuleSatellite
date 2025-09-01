@@ -50,9 +50,16 @@ class MockSatelliteInterceptor @Inject constructor(
 
             path.matches(Regex(".*/positions/\\d+$")) -> {
                 val id = path.substringAfterLast("/")
-                val arr = findPositionsById(id)
+                val arr = findPositionsArrayById(id)
                 if (arr != null) {
-                    val body = org.json.JSONObject().put("positions", arr).toString()
+                    val item = org.json.JSONObject()
+                        .put("id", id)
+                        .put("positions", arr)
+
+                    val body = org.json.JSONObject()
+                        .put("list", org.json.JSONArray().put(item))
+                        .toString()
+
                     ok(req, body)
                 } else {
                     notFound(req, "Positions for $id not found")
@@ -71,7 +78,7 @@ class MockSatelliteInterceptor @Inject constructor(
         return null
     }
 
-    private fun findPositionsById(id: String): org.json.JSONArray? {
+    private fun findPositionsArrayById(id: String): org.json.JSONArray? {
         val list = positionsRoot.getJSONArray("list")
         for (i in 0 until list.length()) {
             val obj = list.getJSONObject(i)

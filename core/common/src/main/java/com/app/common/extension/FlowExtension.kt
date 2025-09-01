@@ -24,7 +24,7 @@ fun <T> Flow<T>.CollectWithLaunchedEffect(
     }
 }
 
-suspend inline fun <T1, T2, T3, R> combineResult(
+suspend inline fun <T1, T2, R> combineResult(
     restResult1: Resource<T1>,
     restResult2: Resource<T2>,
     crossinline transform: suspend (a: T1, b: T2) -> R

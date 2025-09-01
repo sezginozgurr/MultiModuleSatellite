@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.app.common.fold
-import com.app.domain.usecase.SatelliteDetailUseCase
+import com.app.domain.usecase.GetSatelliteDetailAndPositionsUseCase
+import com.app.domain.usecase.PositionUseCase
 import com.app.network.mvi.MVI
 import com.app.network.mvi.mvi
 import com.app.presentation.SatelliteDetailContract.DetailUiAction
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SatelliteDetailViewModel @Inject constructor(
-    val getDetail: SatelliteDetailUseCase,
+    val getDetail: GetSatelliteDetailAndPositionsUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel(),
     MVI<DetailUiState, DetailUiAction, DetailUiEffect> by mvi(DetailUiState(isLoading = true)) {
@@ -40,12 +41,12 @@ class SatelliteDetailViewModel @Inject constructor(
         updateUiState { copy(isLoading = true, error = null) }
 
         getDetail(args.id).fold(
-            onSuccess = { detail ->
+            onSuccess = { (detail, positions) ->
                 updateUiState {
                     copy(
                         isLoading = false,
-                        title = args.name,
                         detail = detail,
+                        positions = positions.positionList[1].positions[1],
                         error = null
                     )
                 }
