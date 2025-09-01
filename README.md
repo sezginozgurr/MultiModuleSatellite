@@ -19,7 +19,7 @@ Bu proje, modern Android geliştirme tekniklerini kullanarak oluşturulmuş çok
 - **Navigation**: Birden fazla NavGraph
 - **Hilt for Dependency Injection**: Bağımlılıkların yönetimi
 - **Retrofit**: RESTful API istekleri
-- **DataStore**: Json verileri kaydetme
+- **DataStore**: Verileri kaydetme
 
 ## Özellikler
 
