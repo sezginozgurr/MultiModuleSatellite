@@ -8,6 +8,6 @@ import javax.inject.Inject
 class SatelliteDetailUseCase @Inject constructor(
     private val repository: SatelliteDetailRepository,
 ) {
-    suspend operator fun invoke(): Resource<List<SatelliteDetailUiModel>> =
-        repository.getSatelliteDetail()
+    suspend operator fun invoke(id: Int): Resource<SatelliteDetailUiModel> =
+        repository.getSatelliteDetail(id)
 }

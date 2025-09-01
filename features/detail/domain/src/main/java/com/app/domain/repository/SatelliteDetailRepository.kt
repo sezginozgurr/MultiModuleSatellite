@@ -4,5 +4,5 @@ import com.app.common.Resource
 import com.app.domain.model.SatelliteDetailUiModel
 
 interface SatelliteDetailRepository {
-    suspend fun getSatelliteDetail(): Resource<List<SatelliteDetailUiModel>>
+    suspend fun getSatelliteDetail(id: Int): Resource<SatelliteDetailUiModel>
 }

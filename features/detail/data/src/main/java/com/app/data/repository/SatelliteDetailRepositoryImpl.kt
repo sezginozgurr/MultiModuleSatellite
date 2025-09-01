@@ -14,8 +14,8 @@ class SatelliteDetailRepositoryImpl @Inject constructor(
     private val mapper: SatelliteDetailMapper
 ) : SatelliteDetailRepository {
 
-    override suspend fun getSatelliteDetail(): Resource<List<SatelliteDetailUiModel>> {
-        return safeApiCall { api.getSatelliteDetail() }
+    override suspend fun getSatelliteDetail(id: Int): Resource<SatelliteDetailUiModel> {
+        return safeApiCall { api.getSatelliteDetail(id) }
             .map { mapper.mapToDetail(it) }
     }
 }

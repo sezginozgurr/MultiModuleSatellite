@@ -39,13 +39,20 @@ class SatelliteDetailViewModel @Inject constructor(
     private fun loadDetail() = viewModelScope.launch {
         updateUiState { copy(isLoading = true, error = null) }
 
-        getDetail().fold(
+        getDetail(args.id).fold(
             onSuccess = { detail ->
-                //updateUiState { copy(isLoading = false, detail = detail, error = null) }
+                updateUiState {
+                    copy(
+                        isLoading = false,
+                        title = args.name,
+                        detail = detail,
+                        error = null
+                    )
+                }
             },
             onError = { ex ->
                 val msg = ex.message.orEmpty().ifBlank { "Unknown error" }
-                //updateUiState { copy(isLoading = false, error = msg, detail = null) }
+                updateUiState { copy(isLoading = false, error = msg) }
                 emitUiEffect(DetailUiEffect.ShowToast(msg))
             }
         )

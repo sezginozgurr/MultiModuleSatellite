@@ -5,7 +5,7 @@ import com.app.domain.model.SatelliteDetailUiModel
 object SatelliteDetailContract {
     data class DetailUiState(
         val isLoading: Boolean = false,
-        val query: String = "",
+        val title: String = "",
         val detail: SatelliteDetailUiModel = SatelliteDetailUiModel(),
         val error: String? = null
     )

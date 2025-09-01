@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class SatelliteDetailMapper @Inject constructor() {
     fun mapToDetail(
-        response: List<SatelliteDetailResponse>
-    ): List<SatelliteDetailUiModel> = response.map { detail ->
+        detail: SatelliteDetailResponse
+    ): SatelliteDetailUiModel =
         SatelliteDetailUiModel(
             id = detail.id,
             costPerLaunch = detail.cost_per_launch,
@@ -15,5 +15,5 @@ class SatelliteDetailMapper @Inject constructor() {
             height = detail.height,
             mass = detail.mass
         )
-    }
+
 }

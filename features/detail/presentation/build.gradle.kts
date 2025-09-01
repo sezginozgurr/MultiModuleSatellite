@@ -55,6 +55,7 @@ dependencies {
     implementation(projects.core.uikit)
     implementation(projects.core.common)
     implementation(projects.core.network)
+    implementation(projects.core.resources)
     implementation(projects.features.detail.domain)
     implementation(projects.features.detail.data)
 
