@@ -21,6 +21,7 @@ Bu proje, modern Android geliştirme tekniklerini kullanarak oluşturulmuş çok
 - **Retrofit**: RESTful API istekleri
 - **DataStore**: Verileri kaydetme
 - **MapperTest**: Mapper Test
+- **HomeViewModelTest**: ViewModel Test
 
 ## Özellikler
 
