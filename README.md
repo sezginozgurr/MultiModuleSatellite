@@ -20,6 +20,7 @@ Bu proje, modern Android geliştirme tekniklerini kullanarak oluşturulmuş çok
 - **Hilt for Dependency Injection**: Bağımlılıkların yönetimi
 - **Retrofit**: RESTful API istekleri
 - **DataStore**: Verileri kaydetme
+- **MapperTest**: Mapper Test
 
 ## Özellikler
 
